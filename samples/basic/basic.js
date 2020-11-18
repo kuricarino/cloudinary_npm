@@ -69,9 +69,11 @@ cloudinary.uploader.upload('pizza.jpg', { tags: 'basic_sample', public_id: 'my_f
 // Eager Transformations:
 // Applied as soon as the file is uploaded, instead of lazily applying them when accessed by your site's visitors.
 var eager_options = {
-  width: 200, height: 150, crop: 'scale', format: 'jpg'
+// Automatically limit image size to 500x500 pixels on upload
+  width: 500, height: 500, crop: 'scale', format: 'jpg'
 };
-cloudinary.uploader.upload("lake.jpg", { tags: "basic_sample", public_id: "blue_lake", eager: eager_options }, function (err, image) {
+// Tag uploaded images --> changed to "basic_sample_image"
+cloudinary.uploader.upload("lake.jpg", { tags: "basic_sample_image", public_id: "blue_lake", eager: eager_options }, function (err, image) {
   // "eager" parameter accepts a hash (or just a single item). You can pass
   // named transformations or transformation parameters as we do here.
   console.log();
@@ -129,13 +131,37 @@ function performTransformations() {
   console.log("> Fit into 200x150");
   console.log("> " + cloudinary.url(uploads.pizza2.public_id, { width: 200, height: 150, crop: "fit", format: "jpg" }));
 
+  // Adds watermark to sample image
+  console.log("> Watermark");
+  console.log("> " + cloudinary.url(uploads.pizza.public_id, { width: 500, height: 500, overlay: "cloudinary_icon", format: "jpg" }));
+
+  // Increases image saturation to 50%
+  console.log("> 50% Image Saturation");
+  console.log("> " + cloudinary.url(uploads.pizza.public_id, { width: 500, height: 500, effect: "saturation:50", format: "jpg" }));
+
   console.log();
   console.log("> Eager transformation of scaling to 200x150");
   console.log("> " + cloudinary.url(uploads.lake.public_id, eager_options));
 
+  // Adds watermark to sample image
+  console.log("> Watermark");
+  console.log("> " + cloudinary.url(uploads.lake.public_id, { width: 500, height: 500, overlay: "cloudinary_icon", format: "jpg" }));
+
+  // Increases image saturation to 50%
+  console.log("> 50% Image Saturation");
+  console.log("> " + cloudinary.url(uploads.lake.public_id, { width: 500, height: 500, effect: "saturation:50", format: "jpg" }));
+  
   console.log();
   console.log("> Face detection based 200x150 thumbnail");
   console.log("> " + cloudinary.url(uploads.couple.public_id, { width: 200, height: 150, crop: "thumb", gravity: "faces", format: "jpg" }));
+
+  // Adds watermark to sample image
+  console.log("> Watermark");
+  console.log("> " + cloudinary.url(uploads.couple.public_id, { width: 500, height: 500, overlay: "cloudinary_icon", format: "jpg" }));
+
+  // Increases image saturation to 50%
+  console.log("> 50% Image Saturation");
+  console.log("> " + cloudinary.url(uploads.couple.public_id, { width: 500, height: 500, effect: "saturation:50", format: "jpg" }));
 
   console.log();
   console.log("> Fill 200x150, round corners, apply the sepia effect");
